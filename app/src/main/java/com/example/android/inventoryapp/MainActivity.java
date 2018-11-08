@@ -1,15 +1,13 @@
 package com.example.android.inventoryapp;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.example.android.inventoryapp.data.InventoryContract;
@@ -54,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 null,
                 null);
 
-        TextView displayView = (TextView) findViewById(R.id.text_view_item);
+        TextView displayView = findViewById(R.id.text_view_item);
 
         try{
             displayView.setText("The inventory table contains " + cursor.getCount() + " items.\n\n");
@@ -96,14 +94,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void insertPet(){
+    private void insertItem() {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
         values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_NAME, "Test Product Name");
-        values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_PRICE, "10.99");
-        values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_QUANTITY, "100");
+        values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_PRICE, 10.99);
+        values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_QUANTITY, 100);
         values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER, "Supplier Name");
         values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_PHONE, "000-000-0000");
 
@@ -126,7 +124,8 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to a click on the "Insert dummy data" menu option
             case R.id.action_insert_dummy_data:
-                insertPet();
+                insertItem();
+                displayDatabaseInfo();
                 return true;
             // Respond to a click on the "Delete all entries" menu option
             case R.id.action_delete_all_entries:
