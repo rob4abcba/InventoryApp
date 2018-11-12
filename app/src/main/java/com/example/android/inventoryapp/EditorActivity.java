@@ -1,7 +1,7 @@
 package com.example.android.inventoryapp;
 
 import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +16,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.android.inventoryapp.data.InventoryContract.InventoryEntry;
-import com.example.android.inventoryapp.data.InventoryDbHelper;
 
 /**
  * Allows user to create a new item or edit an existing one.
@@ -48,11 +47,7 @@ public class EditorActivity extends AppCompatActivity {
      */
     private EditText mSupplierPhoneEditText;
 
-    /**
-     * Name of the supplier. The possible values are:
-     * 0 for supplier1, 1 for supplier2, 2 for supplier3.
-     */
-    private String mSupplier = "0";
+    private String mSupplier = "Default";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +55,11 @@ public class EditorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_editor);
 
         // Find all relevant views that we will need to read user input from
-        mItemNameEditText = findViewById(R.id.edit_item_name);
+        mItemNameEditText = findViewById(R.id.edit_item_product_name);
+        mItemPriceEditText = findViewById(R.id.edit_price);
         mQuantityEditText = findViewById(R.id.edit_item_quantity);
-        mSupplierPhoneEditText = findViewById(R.id.edit_supplier_phone);
         mSupplierNameSpinner = findViewById(R.id.spinner_supplier);
+        mSupplierPhoneEditText = findViewById(R.id.edit_supplier_phone);
 
         setupSpinner();
     }
@@ -74,14 +70,14 @@ public class EditorActivity extends AppCompatActivity {
     private void setupSpinner() {
         // Create adapter for spinner. The list options are from the String array it will use
         // the spinner will use the default layout
-        ArrayAdapter genderSpinnerAdapter = ArrayAdapter.createFromResource(this,
-                R.array.array_gender_options, android.R.layout.simple_spinner_item);
+        ArrayAdapter supplierSpinnerAdapter = ArrayAdapter.createFromResource(this,
+                R.array.array_supplier_options, android.R.layout.simple_spinner_item);
 
         // Specify dropdown layout style - simple list view with 1 item per line
-        genderSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        supplierSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 
         // Apply the adapter to the spinner
-        mSupplierNameSpinner.setAdapter(genderSpinnerAdapter);
+        mSupplierNameSpinner.setAdapter(supplierSpinnerAdapter);
 
         // Set the integer mSelected to the constant values
         mSupplierNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -90,11 +86,11 @@ public class EditorActivity extends AppCompatActivity {
                 String selection = (String) parent.getItemAtPosition(position);
                 if (!TextUtils.isEmpty(selection)) {
                     if (selection.equals(getString(R.string.supplier_1))) {
-                        mSupplier = getString(R.string.supplier_1); // Supplier 1
+                        mSupplier = "Supplier 1"; // Supplier 1
                     } else if (selection.equals(getString(R.string.supplier_2))) {
-                        mSupplier = getString(R.string.supplier_2); // Supplier 2
+                        mSupplier = "Supplier 2"; // Supplier 2
                     } else {
-                        mSupplier = getString(R.string.supplier_3); // Supplier 3
+                        mSupplier = "Supplier 3"; // Supplier 3
                     }
                 }
             }
@@ -102,19 +98,16 @@ public class EditorActivity extends AppCompatActivity {
             // Because AdapterView is an abstract class, onNothingSelected must be defined
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                mSupplier = "0"; // Unknown
+                mSupplier = "Unknown";
             }
         });
     }
 
-    private void insertPet() {
+    private void insertInventory() {
         String nameString = mItemNameEditText.getText().toString().trim();
         String priceString = mItemPriceEditText.getText().toString().trim();
         String quantityString = mQuantityEditText.getText().toString().trim();
         String supplierPhoneString = mSupplierPhoneEditText.getText().toString().trim();
-
-        InventoryDbHelper mDbHelper = new InventoryDbHelper(this);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
 
@@ -124,12 +117,17 @@ public class EditorActivity extends AppCompatActivity {
         values.put(InventoryEntry.COLUMN_PRODUCT_SUPPLIER, mSupplier);
         values.put(InventoryEntry.COLUMN_PRODUCT_SUPPLIER_PHONE, supplierPhoneString);
 
-        long newRowId = db.insert(InventoryEntry.TABLE_NAME, null, values);
+        Uri newUri = getContentResolver().insert(InventoryEntry.CONTENT_URI, values);
 
-        if (newRowId == -1) {
-            Toast.makeText(this, "Error saving item!", Toast.LENGTH_SHORT).show();
+        // Show a toast message depending on whether or not the insertion was successful
+        if (newUri == null) {
+            // If the new content URI is null, then there was an error with insertion.
+            Toast.makeText(this, getString(R.string.editor_insert_inventory_failed),
+                    Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Item saved with row id: " + newRowId, Toast.LENGTH_SHORT).show();
+            // Otherwise, the insertion was successful and we can display a toast.
+            Toast.makeText(this, getString(R.string.editor_insert_inventory_successful),
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -147,7 +145,7 @@ public class EditorActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to a click on the "Save" menu option
             case R.id.action_save:
-                insertPet();
+                insertInventory();
                 finish();
                 return true;
             // Respond to a click on the "Delete" menu option
