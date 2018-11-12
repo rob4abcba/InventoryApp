@@ -30,5 +30,13 @@ public final class InventoryContract {
         public final static String COLUMN_PRODUCT_QUANTITY = "quantity";
         public final static String COLUMN_PRODUCT_SUPPLIER = "supplier";
         public final static String COLUMN_PRODUCT_SUPPLIER_PHONE = "phone";
+
+        /**
+         * Possible values for the supplier.
+         */
+        public static final int SUPPLIER_UNKNOWN = 0;
+        public static final int SUPPLIER1 = 1;
+        public static final int SUPPLIER2 = 2;
+        public static final int SUPPLIER3 = 3;
     }
 }

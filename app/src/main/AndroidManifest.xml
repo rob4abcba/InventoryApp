@@ -21,7 +21,6 @@
 
         <activity
             android:name=".EditorActivity"
-            android:label="Add Item"
             android:parentActivityName=".CatalogActivity"
             android:theme="@style/AppTheme">
             <!-- Parent activity meta-data to support 4.0 and lower -->

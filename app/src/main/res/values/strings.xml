@@ -8,7 +8,8 @@
     <string name="action_delete_all_entries">Delete All</string>
 
     <!-- Title for the activity to add a new item [CHAR LIMIT=20] -->
-    <string name="editor_activity_title_new_item">Add an Item</string>
+    <string name="editor_activity_title_new_inventory">Add Inventory</string>
+    <string name="editor_activity_title_edit_inventory">Edit Inventory</string>
 
     <!-- Label for editor menu option to save and leave editor [CHAR LIMIT=20] -->
     <string name="action_save">Save</string>
@@ -23,6 +24,7 @@
     <string name="supplier_1">Supplier 1</string>
     <string name="supplier_2">Supplier 2</string>
     <string name="supplier_3">Supplier 3</string>
+    <string name="supplier_unknown">Unknown</string>
 
     <string name="category_quantity">Quantity</string>
     <string name="category_supplier">Supplier</string>
@@ -43,6 +45,12 @@
 
     <!-- Subtitle text for the empty view that prompts the user to add a pet [CHAR LIMIT=50] -->
     <string name="empty_view_subtitle_text">Get started by adding some inventory!</string>
+
+    <!-- Toast message in editor when current pet was successfully updated [CHAR LIMIT=NONE] -->
+    <string name="editor_update_inventory_successful">Inventory updated</string>
+
+    <!-- Toast message in editor when current pet has failed to be updated [CHAR LIMIT=NONE] -->
+    <string name="editor_update_inventory_failed">Error with updating inventory!</string>
 
 
 </resources>
