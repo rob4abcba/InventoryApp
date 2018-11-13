@@ -1,13 +1,11 @@
 package com.example.android.inventoryapp;
 
 import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -20,7 +18,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.android.inventoryapp.data.InventoryContract;
 
@@ -35,7 +32,6 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalog);
 
-        // Setup FAB to open EditorActivity
         Button fab = findViewById(R.id.add_item_button);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +51,7 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
 
         inventoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
                 Uri currentInventoryUri = ContentUris.withAppendedId(InventoryContract.InventoryEntry.CONTENT_URI, id);
                 intent.setData(currentInventoryUri);
@@ -66,26 +62,14 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
         getSupportLoaderManager().initLoader(INVENTORY_LOADER, null, this);
     }
 
-    private void insertInventory() {
-        ContentValues values = new ContentValues();
-
-        values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_NAME, "Test Product Name");
-        values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_PRICE, 10.99);
-        values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_QUANTITY, 100);
-        values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER, "Supplier Name");
-        values.put(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_PHONE, "000-000-0000");
-    }
-
-    private void deleteAllPets() {
-        showDeleteAllConfirmationDialog();
-        int rowsDeleted = getContentResolver().delete(InventoryContract.InventoryEntry.CONTENT_URI, null, null);
-        Log.v("CatalogActivity", rowsDeleted + " rows deleted from database");
+    private void deleteAllInventory() {
+        int rowsDeleted = getContentResolver().delete(InventoryContract.InventoryEntry.CONTENT_URI, null,
+                null);
+        Log.v("CatalogActivity", rowsDeleted + " rows deleted from pet database");
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu options from the res/menu/menu_catalog.xml file.
-        // This adds menu items to the app bar.
         getMenuInflater().inflate(R.menu.menu_catalog, menu);
         return true;
     }
@@ -93,22 +77,19 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_insert_dummy_data:
-                insertInventory();
-                return true;
             case R.id.action_delete_all_entries:
-                deleteAllPets();
+                showDeleteAllConfirmationDialog();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String[] projection = {
                 InventoryContract.InventoryEntry._ID,
                 InventoryContract.InventoryEntry.COLUMN_PRODUCT_NAME,
+                InventoryContract.InventoryEntry.COLUMN_PRODUCT_PRICE,
                 InventoryContract.InventoryEntry.COLUMN_PRODUCT_QUANTITY};
 
         return new CursorLoader(this,
@@ -120,29 +101,13 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
     }
 
     @Override
-    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         mCursorAdapter.swapCursor(cursor);
     }
 
     @Override
-    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+    public void onLoaderReset(Loader<Cursor> loader) {
         mCursorAdapter.swapCursor(null);
-    }
-
-    private void deleteAllInventory() {
-        Intent intent = getIntent();
-        Uri mCurrentInventoryUri = intent.getData();
-        if (mCurrentInventoryUri != null) {
-            int rowsDeleted = getContentResolver().delete(mCurrentInventoryUri, null, null);
-            if (rowsDeleted == 0) {
-                Toast.makeText(this, getString(R.string.editor_delete_failed),
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, getString(R.string.editor_delete_successful),
-                        Toast.LENGTH_SHORT).show();
-            }
-        }
-        //finish();
     }
 
     private void showDeleteAllConfirmationDialog() {
