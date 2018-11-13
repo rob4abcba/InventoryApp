@@ -19,6 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="16dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
             android:text="@string/category_overview" />
 
         <!-- Input fields -->
@@ -115,6 +117,32 @@
                 android:hint="@string/hint_item_quantity"
                 android:inputType="number" />
         </RelativeLayout>
+
+    </LinearLayout>
+
+    <!-- Quantity increase/decrease buttons -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/increase_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:text="@string/increase" />
+
+        <Button
+            android:id="@+id/decrease_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:text="@string/decrease" />
+
     </LinearLayout>
 
     <!-- Supplier category -->
@@ -171,7 +199,17 @@
                 style="@style/EditorFieldStyle"
                 android:hint="@string/hint_supplier_phone"
                 android:inputType="phone" />
-
         </RelativeLayout>
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/call_supplier_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_margin="4dp"
+        android:onClick="callSupplier"
+        android:text="@string/call_button" />
+
 </LinearLayout>

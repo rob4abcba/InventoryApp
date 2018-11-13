@@ -18,7 +18,7 @@
     <string name="action_delete">Delete</string>
 
     <!-- Label for overview category of attributes in the editor [CHAR LIMIT=30] -->
-    <string name="category_overview">Overview</string>
+    <string name="category_overview">Product Details</string>
 
     <!-- List of suppliers available in spinner [CHAR LIMIT=30] -->
     <string name="supplier_1">Supplier 1</string>
@@ -37,7 +37,7 @@
     <string name="hint_supplier_phone">000-000-0000</string>
     <string name="hint_product_name">Name of product</string>
     <string name="hint_price">0.00</string>
-    <string name="editor_insert_inventory_failed">There was a problem inserting inventory!</string>
+    <string name="editor_insert_inventory_failed">There was a problem adding inventory!</string>
     <string name="editor_insert_inventory_successful">Inventory saved successfully!</string>
 
     <!-- Title text for the empty view -->
@@ -48,7 +48,6 @@
 
     <!-- Toast message in editor when inventory has been successfully updated -->
     <string name="editor_update_inventory_successful">Inventory updated</string>
-
     <!-- Toast message in editor when inventory has failed to be updated -->
     <string name="editor_update_inventory_failed">Error with updating inventory!</string>
 
@@ -84,6 +83,12 @@
     <string name="unknown">Unknown</string>
 
     <string name="add_edit_button">Add Item</string>
+
+    <string name="call_button">Call Supplier Now</string>
+
+    <string name="increase">Increase (+)</string>
+    <string name="decrease">Decrease (-)</string>
+    <string name="quantity_too_small">\"You cannot have less than 0 quantity!</string>
 
 
 </resources>

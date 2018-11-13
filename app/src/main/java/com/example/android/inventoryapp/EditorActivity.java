@@ -120,18 +120,14 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
      * Setup the dropdown spinner that allows the user to select the gender of the pet.
      */
     private void setupSpinner() {
-        // Create adapter for spinner. The list options are from the String array it will use
-        // the spinner will use the default layout
+
         ArrayAdapter supplierSpinnerAdapter = ArrayAdapter.createFromResource(this,
                 R.array.array_supplier_options, android.R.layout.simple_spinner_item);
 
-        // Specify dropdown layout style - simple list view with 1 item per line
         supplierSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 
-        // Apply the adapter to the spinner
         mSupplierNameSpinner.setAdapter(supplierSpinnerAdapter);
 
-        // Set the integer mSelected to the constant values
         mSupplierNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -149,7 +145,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 }
             }
 
-            // Because AdapterView is an abstract class, onNothingSelected must be defined
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 mSupplier = 0;
@@ -166,8 +161,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         if (mCurrentInventoryUri == null && TextUtils.isEmpty(nameString) && TextUtils.isEmpty(nameString)
                 && TextUtils.isEmpty(priceString) && TextUtils.isEmpty(supplierPhoneString)
                 && mSupplier == InventoryEntry.SUPPLIER_UNKNOWN) {
-            // Since no fields were modified, we can return early without creating a new pet.
-            // No need to create ContentValues and no need to do any ContentProvider operations.
             return;
         }
 
@@ -191,18 +184,13 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                         Toast.LENGTH_SHORT).show();
             }
         } else {
-            // Otherwise this is an EXISTING pet, so update the pet with content URI: mCurrentPetUri
-            // and pass in the new ContentValues. Pass in null for the selection and selection args
-            // because mCurrentPetUri will already identify the correct row in the database that
-            // we want to modify.
+
             int rowsAffected = getContentResolver().update(mCurrentInventoryUri, values, null, null);
-            // Show a toast message depending on whether or not the update was successful.
+
             if (rowsAffected == 0) {
-                // If no rows were affected, then there was an error with the update.
                 Toast.makeText(this, getString(R.string.editor_update_inventory_failed),
                         Toast.LENGTH_SHORT).show();
             } else {
-                // Otherwise, the update was successful and we can display a toast.
                 Toast.makeText(this, getString(R.string.editor_update_inventory_successful),
                         Toast.LENGTH_SHORT).show();
             }
@@ -211,8 +199,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu options from the res/menu/menu_editor.xml file.
-        // This adds menu items to the app bar.
         getMenuInflater().inflate(R.menu.menu_editor, menu);
         return true;
     }
@@ -294,7 +280,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     @Override
-    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         if (cursor == null || cursor.getCount() < 1) {
             return;
         }
@@ -394,5 +380,11 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             }
         }
         finish();
+    }
+
+    public void callSupplier(View view) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + mSupplierPhoneEditText.getText()));
+        startActivity(intent);
     }
 }
