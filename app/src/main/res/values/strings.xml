@@ -40,17 +40,44 @@
     <string name="editor_insert_inventory_failed">There was a problem inserting inventory!</string>
     <string name="editor_insert_inventory_successful">Inventory saved successfully!</string>
 
-    <!-- Title text for the empty view, which describes the empty dog house image [CHAR LIMIT=50] -->
+    <!-- Title text for the empty view -->
     <string name="empty_view_title_text">It\'s empty in here...</string>
 
-    <!-- Subtitle text for the empty view that prompts the user to add a pet [CHAR LIMIT=50] -->
+    <!-- Subtitle text for the empty view  -->
     <string name="empty_view_subtitle_text">Get started by adding some inventory!</string>
 
-    <!-- Toast message in editor when current pet was successfully updated [CHAR LIMIT=NONE] -->
+    <!-- Toast message in editor when inventory has been successfully updated -->
     <string name="editor_update_inventory_successful">Inventory updated</string>
 
-    <!-- Toast message in editor when current pet has failed to be updated [CHAR LIMIT=NONE] -->
+    <!-- Toast message in editor when inventory has failed to be updated -->
     <string name="editor_update_inventory_failed">Error with updating inventory!</string>
+
+    <!-- Dialog message when user is leaving editor but hasn't saved changes -->
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+
+    <!-- Dialog button text for the option to discard a user's changes -->
+    <string name="discard">Discard</string>
+
+    <!-- Dialog button text for the option to keep editing -->
+    <string name="keep_editing">Keep Editing</string>
+
+    <!-- Toast message in editor when current item was successfully deleted [CHAR LIMIT=NONE] -->
+    <string name="editor_delete_successful">Inventory deleted</string>
+
+    <!-- Toast message in editor when current item has failed to be deleted [CHAR LIMIT=NONE] -->
+    <string name="editor_delete_failed">Error with deleting item</string>
+
+    <!-- Dialog message to ask the user to confirm deleting [CHAR LIMIT=NONE] -->
+    <string name="delete_dialog_msg">Delete this item?</string>
+
+    <!-- Dialog message to ask the user to confirm deleting [CHAR LIMIT=NONE] -->
+    <string name="delete_all_dialog_msg">Delete ALL inventory?</string>
+
+    <!-- Dialog button text for the option to confirm deleting[CHAR LIMIT=20] -->
+    <string name="delete">Delete</string>
+
+    <!-- Dialog button text for the option to cancel deletion [CHAR LIMIT=20] -->
+    <string name="cancel">Cancel</string>
 
 
 </resources>

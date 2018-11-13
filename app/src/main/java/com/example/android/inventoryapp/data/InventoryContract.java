@@ -38,5 +38,9 @@ public final class InventoryContract {
         public static final int SUPPLIER1 = 1;
         public static final int SUPPLIER2 = 2;
         public static final int SUPPLIER3 = 3;
+
+        public static boolean isValidSupplier(int supplier) {
+            return supplier == SUPPLIER_UNKNOWN || supplier == SUPPLIER1 || supplier == SUPPLIER2 || supplier == SUPPLIER3;
+        }
     }
 }

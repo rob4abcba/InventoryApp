@@ -97,9 +97,9 @@ public class InventoryProvider extends ContentProvider {
             throw new IllegalArgumentException("Inventory item requires valid quantity");
         }
 
-        String supplier = values.getAsString(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER);
-        if (supplier == null) {
-            throw new IllegalArgumentException("Supplier requires a name");
+        Integer supplier = values.getAsInteger(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER);
+        if (supplier == null || !InventoryContract.InventoryEntry.isValidSupplier(supplier)) {
+            throw new IllegalArgumentException("Inventory item requires a valid supplier");
         }
 
         String supplierPhone = values.getAsString(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER_PHONE);
@@ -188,8 +188,8 @@ public class InventoryProvider extends ContentProvider {
         }
 
         if (values.containsKey(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER)) {
-            String supplier = values.getAsString(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER);
-            if (supplier == null) {
+            Integer supplier = values.getAsInteger(InventoryContract.InventoryEntry.COLUMN_PRODUCT_SUPPLIER);
+            if (supplier == null || !InventoryContract.InventoryEntry.isValidSupplier(supplier)) {
                 throw new IllegalArgumentException("Supplier requires a name");
             }
         }
