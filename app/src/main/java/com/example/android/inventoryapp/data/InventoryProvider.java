@@ -120,7 +120,6 @@ public class InventoryProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        // Get writeable database
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
         int rowsDeleted;

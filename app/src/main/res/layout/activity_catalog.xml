@@ -49,6 +49,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
-        android:text="Add Item" />
+        android:text="@string/add_edit_button" />
 
 </RelativeLayout>

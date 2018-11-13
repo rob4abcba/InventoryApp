@@ -33,12 +33,12 @@ import com.example.android.inventoryapp.data.InventoryContract.InventoryEntry;
 public class EditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     /**
-     * Identifier for the pet data loader
+     * Identifier for the loader
      */
     private static final int EXISTING_INVENTORY_LOADER = 0;
 
     /**
-     * Content URI for the existing pet (null if it's a new pet)
+     * Content URI for the existing inventory (null if it's new)
      */
     private Uri mCurrentInventoryUri;
 
@@ -101,7 +101,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             getSupportLoaderManager().initLoader(EXISTING_INVENTORY_LOADER, null, this);
         }
 
-        // Find all relevant views that we will need to read user input from
         mItemNameEditText = findViewById(R.id.edit_item_product_name);
         mItemPriceEditText = findViewById(R.id.edit_price);
         mQuantityEditText = findViewById(R.id.edit_item_quantity);
